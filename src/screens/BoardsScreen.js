@@ -1,35 +1,38 @@
 import React, { useState } from 'react';
-import { View, FlatList, Text, Button, StyleSheet } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { View, FlatList, StyleSheet } from 'react-native';
 import data from '../resources/data.json';
 import BoardCard from '../components/boardCard';
-import Toolbar from '../components/Toolbar'
+import Toolbar from '../components/Toolbar';
 
 export default function BoardsScreen() {
   const [boards, setBoards] = useState(data.boards);
   const [lists, setLists] = useState(data.lists);
   const [tasks, setTasks] = useState(data.tasks);
-  const getBoardList = (boardId) => {
-    const filteredList = lists.filter((list) => list.boardId === boardId);
-    return filteredList;
+
+  const [selectedBoards, setSelectedBoards] = useState([]);
+
+  const onLongPress = (boardId) => {
+    if (selectedBoards.includes(boardId)) {
+      setSelectedBoards(selectedBoards.filter((board) => board !== boardId));
+    } else {
+      setSelectedBoards([...selectedBoards, boardId]);
+    }
   };
 
-  const getlistTasks = (boardId) => {
+  const getBoardList = (boardId) => lists.filter((list) => list.boardId === boardId);
+
+  const getListTasks = (boardId) => {
     const listIds = lists.filter((list) => list.boardId === boardId).map((list) => list.id);
-    const listTasks = tasks.filter((task) => task.listId in listIds);
-    return listTasks;
+    return tasks.filter((task) => listIds.includes(task.listId));
   };
-  const [selectedBoards, setSelectedBoards] = useState([])
-
-  
 
   return (
     <View style={styles.container}>
-        <Toolbar
-            hasSelected={selectedBoards.length > 0}
-            onAdd={() => console.log('Add action')}
-            onRemove={() => console.log('Remove action')}
-            />
+      <Toolbar
+        hasSelected={selectedBoards.length > 0}
+        onAdd={() => console.log('Add action')}
+        onRemove={() => console.log('Remove action')}
+      />
       <FlatList
         data={boards}
         keyExtractor={(item) => item.id.toString()}
@@ -38,7 +41,9 @@ export default function BoardsScreen() {
             name={item.name}
             id={item.id}
             listData={getBoardList(item.id)}
-            taskData={getlistTasks(item.id)}
+            taskData={getListTasks(item.id)}
+            onLongPress={onLongPress}
+            isSelected={selectedBoards.includes(item.id)}
           />
         )}
       />

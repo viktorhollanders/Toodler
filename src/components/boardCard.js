@@ -1,9 +1,9 @@
 import React from 'react';
-import { Text, View, Button, StyleSheet } from 'react-native';
+import { Text, View, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-export default function BoardCard({ name, id, listData, taskData }) {
+export default function BoardCard({ name, id, listData, taskData, onLongPress, isSelected }) {
   const { navigate } = useNavigation();
 
   const navigateToLists = (boardId) => {
@@ -11,8 +11,12 @@ export default function BoardCard({ name, id, listData, taskData }) {
   };
 
   return (
-    <TouchableOpacity onPress={() => navigateToLists(id, listData, taskData)}>
-      <View style={styles.card}>
+    <TouchableOpacity
+      onPress={() => navigateToLists(id)}
+      onLongPress={() => onLongPress(id)}
+    >
+      {isSelected ? <Text>Er valið, setja mynd</Text> : null}
+      <View style={[styles.card, isSelected && styles.selectedCard]}>
         <Text style={styles.name}>{name}</Text>
       </View>
     </TouchableOpacity>
@@ -29,6 +33,9 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 4,
     elevation: 2,
+  },
+  selectedCard: {
+    opacity: 0.5, // Highlight selected card
   },
   name: {
     fontSize: 18,
