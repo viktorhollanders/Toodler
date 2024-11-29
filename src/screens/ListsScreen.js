@@ -36,6 +36,8 @@ export default function ListsScreen({ route }) {
   const { boardId, listData, taskData } = route.params;
   console.log(listData);
   console.log(taskData);
+
+  return <Text>hello I board nr {boardId}</Text>;
 }
 
 const styles = StyleSheet.create({
