@@ -1,10 +1,35 @@
 import React from 'react';
-import { Text, View, Image } from 'react-native';
+import { Text, View, Button, StyleSheet } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
-export default function BoardCard() {
+export default function BoardCard({ name, id }) {
+  const { navigate } = useNavigation();
+
+  const navigateToLists = (boardId) => {
+    navigate('Lists', { boardId });
+  };
+
   return (
-    <View>
-      <Text>hello</Text>
+    <View style={styles.card}>
+      <Text style={styles.name}>{name}</Text>
+      <Button title="View Lists" onPress={() => navigateToLists(id)} />
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  card: {
+    backgroundColor: '#fff',
+    padding: 15,
+    marginBottom: 10,
+    borderRadius: 8,
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 2,
+  },
+  name: {
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+});
