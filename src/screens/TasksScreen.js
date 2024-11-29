@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, FlatList, Text, StyleSheet } from 'react-native';
 import { useRoute } from '@react-navigation/native';
-import data from '../data/data.json';
+import data from '../resources/data.json';
 
 export default function TasksScreen() {
   const route = useRoute();

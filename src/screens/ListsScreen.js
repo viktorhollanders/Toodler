@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, FlatList, Text, Button, StyleSheet } from 'react-native';
 import { useRoute, useNavigation } from '@react-navigation/native';
-import data from '../data/data.json';
+import data from '../resources/data.json';
 
 export default function ListsScreen() {
   const route = useRoute();
