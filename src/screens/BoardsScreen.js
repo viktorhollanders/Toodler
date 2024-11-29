@@ -10,14 +10,17 @@ export default function BoardsScreen() {
   const [tasks, setTasks] = useState(data.tasks);
 
   const [selectedBoards, setSelectedBoards] = useState([]);
-  const [hiddenBoards, setHiddenBoards] = useState([]);
 
-  const onRemove = () => {
-    setHiddenBoards([...hiddenBoards, ...selectedBoards]);
+  const setHidden = () => {
+    setBoards((prevBoards) =>
+      prevBoards.map((board) =>
+        selectedBoards.includes(board.id) ? { ...board, hidden: true } : board
+      )
+    );
     setSelectedBoards([]);
   };
 
-  const onLongPress = (boardId) => {
+  const onLongPressBoard = (boardId) => {
     if (selectedBoards.includes(boardId)) {
       setSelectedBoards(selectedBoards.filter((board) => board !== boardId));
     } else {
@@ -26,7 +29,7 @@ export default function BoardsScreen() {
   };
 
   const getBoardList = (boardId) => lists.filter((list) => list.boardId === boardId);
-  const visibleBoards = boards.filter((board) => !hiddenBoards.includes(board.id));
+  const visibleBoards = boards.filter((board) => !board.hidden);
 
   const getListTasks = (boardId) => {
     const listIds = lists.filter((list) => list.boardId === boardId).map((list) => list.id);
@@ -39,7 +42,7 @@ export default function BoardsScreen() {
         hasSelected={selectedBoards.length}
         onAdd={() => console.log('Add action')}
         onEdit={() => console.log('Edit action')}
-        onRemove={onRemove}
+        onRemove={setHidden}
       />
       <FlatList
         data={visibleBoards}
@@ -50,7 +53,7 @@ export default function BoardsScreen() {
             id={item.id}
             listData={getBoardList(item.id)}
             taskData={getListTasks(item.id)}
-            onLongPress={onLongPress}
+            onLongPress={onLongPressBoard}
             isSelected={selectedBoards.includes(item.id)}
           />
         )}
