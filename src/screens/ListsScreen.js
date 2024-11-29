@@ -36,8 +36,23 @@ export default function ListsScreen({ route }) {
   const { boardId, listData, taskData } = route.params;
   console.log(listData);
   console.log(taskData);
-
-  return <Text>hello I board nr {boardId}</Text>;
+    return (
+    <View style={styles.container}>
+      <FlatList
+        data={listData}
+        keyExtractor={(item) => item.id.toString()}
+        renderItem={({ item }) => (
+          <View style={styles.card}>
+            {/* <Text> {item.name} </Text> */}
+            <TempListCard name={item.name} taskData={taskData}/>
+            {/* <Text style={styles.name}>{item.name}</Text> */}
+            {/* <listCard name={item.name}/> */}
+            {/* <Button title="View Tasks" onPress={() => navigateToTasks(item.id)} /> */}
+          </View>
+        )}
+      />
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({

@@ -1,16 +1,18 @@
 import React from "react";
 import { Text, View, FlatList } from "react-native";
-// import { taskCard } from "./taskCard"
+import TaskCard from './TempTaskCard';
 
-export default function TempListCard({ name }) {
+export default function TempListCard({ name, taskData }) {
+    // console.log(taskData);
     return (
     <View>
         <Text> {name} </Text>
-        {/* <FlatList
-            data={tasks}
+        <FlatList
+            data={taskData}
+            
             renderItem={({item}) => (
-                <taskCard {...item} />
-            )}  /> */}
+                <TaskCard description={item.description} />
+            )}  />
     </View>
     );
 };
