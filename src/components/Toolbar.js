@@ -6,20 +6,25 @@ const Toolbar = ({ hasSelected, onAdd, onEdit, onRemove }) => (
     <TouchableHighlight
       style={styles.toolbarAction}
       onPress={onAdd}
+      disabled={hasSelected>0}
       underlayColor="#ddd"
     >
-      <Text style={styles.toolbarActionText}>Add</Text>
+      <Text
+        style={[
+          styles.toolbarActionText,
+          hasSelected > 0 ? { color: 'rgba(155, 155, 155, .5)' } : {},
+        ]}>Add</Text>
     </TouchableHighlight>
 
     <TouchableHighlight
       style={styles.toolbarAction}
       onPress={onEdit}
-      disabled={!hasSelected}
+      disabled={hasSelected !== 1}
       underlayColor="#ddd"
     ><Text
         style={[
           styles.toolbarActionText,
-          !hasSelected ? { color: 'rgba(155, 155, 155, .5)' } : {},
+          hasSelected !== 1 ? { color: 'rgba(155, 155, 155, .5)' } : {},
         ]}>Edit</Text>
     </TouchableHighlight>
 
@@ -27,12 +32,12 @@ const Toolbar = ({ hasSelected, onAdd, onEdit, onRemove }) => (
     <TouchableHighlight
       style={styles.toolbarAction}
       onPress={onRemove}
-      disabled={!hasSelected}
+      disabled={hasSelected === 0}
       underlayColor="#ddd"
     ><Text
         style={[
           styles.toolbarActionText,
-          !hasSelected ? { color: 'rgba(155, 155, 155, .5)' } : {},
+          hasSelected === 0 ? { color: 'rgba(155, 155, 155, .5)' } : {},
         ]} >Remove</Text>
     </TouchableHighlight>
   </View>

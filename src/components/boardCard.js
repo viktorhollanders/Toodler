@@ -15,7 +15,7 @@ export default function BoardCard({ name, id, listData, taskData, onLongPress, i
       onPress={() => navigateToLists(id)}
       onLongPress={() => onLongPress(id)}
     >
-      {isSelected ? <Text>Er valið, setja mynd</Text> : null}
+      {isSelected ? <Text>Er valið, setja icon</Text> : null}
       <View style={[styles.card, isSelected && styles.selectedCard]}>
         <Text style={styles.name}>{name}</Text>
       </View>
@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   selectedCard: {
-    opacity: 0.5, // Highlight selected card
+    opacity: 0.5,
   },
   name: {
     fontSize: 18,

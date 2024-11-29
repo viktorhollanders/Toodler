@@ -10,6 +10,12 @@ export default function BoardsScreen() {
   const [tasks, setTasks] = useState(data.tasks);
 
   const [selectedBoards, setSelectedBoards] = useState([]);
+  const [hiddenBoards, setHiddenBoards] = useState([]);
+
+  const onRemove = () => {
+    setHiddenBoards([...hiddenBoards, ...selectedBoards]);
+    setSelectedBoards([]);
+  };
 
   const onLongPress = (boardId) => {
     if (selectedBoards.includes(boardId)) {
@@ -20,6 +26,7 @@ export default function BoardsScreen() {
   };
 
   const getBoardList = (boardId) => lists.filter((list) => list.boardId === boardId);
+  const visibleBoards = boards.filter((board) => !hiddenBoards.includes(board.id));
 
   const getListTasks = (boardId) => {
     const listIds = lists.filter((list) => list.boardId === boardId).map((list) => list.id);
@@ -29,12 +36,13 @@ export default function BoardsScreen() {
   return (
     <View style={styles.container}>
       <Toolbar
-        hasSelected={selectedBoards.length > 0}
+        hasSelected={selectedBoards.length}
         onAdd={() => console.log('Add action')}
-        onRemove={() => console.log('Remove action')}
+        onEdit={() => console.log('Edit action')}
+        onRemove={onRemove}
       />
       <FlatList
-        data={boards}
+        data={visibleBoards}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
           <BoardCard
