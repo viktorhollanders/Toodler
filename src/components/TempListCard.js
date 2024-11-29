@@ -4,11 +4,11 @@ import { useNavigation } from '@react-navigation/native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import TaskCard from './TempTaskCard';
 
-export default function TempListCard({listId, listData, taskData, onLongPress, isSelected }) {
+export default function TempListCard({listId, listData, taskData, setLists, setTasks, onLongPress, isSelected }) {
     const { navigate } = useNavigation();
 
-    const navigateToTasks = (listId, listData, taskData) => {
-        navigate('Tasks', { listId, listData, taskData });
+    const navigateToTasks = (listId, listData, setLists, setTasks, taskData) => {
+        navigate('Tasks', { listId, listData, setLists, setTasks, taskData });
       };
 
     const filteredTasks = taskData.filter(task => task.listId === listId);

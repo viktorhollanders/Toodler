@@ -3,11 +3,11 @@ import { Text, View, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-export default function BoardCard({ name, id, listData, taskData, onLongPress, isSelected }) {
+export default function BoardCard({ name, id, listData, taskData, setLists, setTasks, onLongPress, isSelected }) {
   const { navigate } = useNavigation();
 
   const navigateToLists = (boardId) => {
-    navigate('Lists', { boardId, listData, taskData, onLongPress });
+    navigate('Lists', { boardId, listData, taskData, setLists, setTasks, onLongPress });
   };
 
   return (

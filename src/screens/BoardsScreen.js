@@ -55,6 +55,8 @@ export default function BoardsScreen() {
             id={item.id}
             listData={getBoardList(item.id)}
             taskData={getListTasks(item.id)}
+            setLists={setLists}
+            setTasks={setTasks}
             onLongPress={onLongPressBoard}
             isSelected={selectedBoards.includes(item.id)}
           />

@@ -6,18 +6,23 @@ import Toolbar from '../components/Toolbar';
 
 export default function ListsScreen({ route }) {
 
-  const { boardId, listData, taskData} = route.params;
+  const { boardId, listData, taskData, setLists, setTasks} = route.params;
 
-  const [lists, setLists] = useState(listData);
-  const [tasks, setTasks] = useState(taskData);
+  // const [lists, setLists] = useState(listData);
+  // const [tasks, setTasks] = useState(taskData);
 
   const [selectedLists, setSelectedLists] = useState([]);
-  const [hiddenLists, setHiddenLists] = useState([]);
 
-  const onRemove = () => {
-    setHiddenLists([...hiddenLists, ...selectedLists]);
+  const setHidden = () => {
+    setLists((prevLists) =>
+      prevLists.map((list) =>
+        selectedLists.includes(list.id) ? { ...list, hidden: true } : list
+      )
+    );
     setSelectedLists([]);
   };
+
+  console.log(listData)
 
   const onLongPressLists = (listId) => {
     if (selectedLists.includes(listId)) {
@@ -27,18 +32,16 @@ export default function ListsScreen({ route }) {
     }
   };
 
-  const visibleLists = lists.filter((list) => !hiddenLists.includes(list.id));
+  const visibleLists = listData.filter((list) => !list.hidden);
 
 
-  console.log(listData);
-  console.log(taskData);
     return (
     <View style={styles.container}>
       <Toolbar
         hasSelected={selectedLists.length}
         onAdd={() => console.log('Add action')}
         onEdit={() => console.log('Edit action')}
-        onRemove={onRemove}
+        onRemove={setHidden}
       />
       <FlatList
         data={visibleLists}
