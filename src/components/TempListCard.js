@@ -7,20 +7,21 @@ import TaskCard from './TempTaskCard';
 export default function TempListCard({listId, listData, taskData, onLongPress, isSelected }) {
     const { navigate } = useNavigation();
 
-    const navigateToTasks = (listId) => {
-        navigate('Tasks', { listId });
+    const navigateToTasks = (listId, listData, taskData) => {
+        navigate('Tasks', { listId, listData, taskData });
       };
+
+    const filteredTasks = taskData.filter(task => task.listId === listId);
 
     return (
     <TouchableOpacity
-      onPress={() => navigateToTasks(listId)}
+      onPress={() => navigateToTasks(listId, listData, taskData)}
       onLongPress={() => onLongPress(listId)}
     >
     <View style={[styles.card, isSelected && styles.selectedCard]}>
         <Text> {listData.name} </Text>
-        <Text> {listData.id} </Text>
         <FlatList
-            data={taskData}
+            data={filteredTasks}
             keyExtractor={(item) => item.id.toString()}
             renderItem={({item}) => (
                 <TaskCard taskData={item} />

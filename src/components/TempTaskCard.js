@@ -5,7 +5,7 @@ export default function TaskCard({ taskData }) {
 
 return (
     <View>
-        <Text> {taskData.description} </Text>
+        <Text> {taskData.name} </Text>
     </View>
 );
 }

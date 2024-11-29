@@ -1,31 +1,39 @@
 import React from 'react';
 import { View, FlatList, Text, StyleSheet } from 'react-native';
 import { useRoute } from '@react-navigation/native';
-import data from '../resources/data.json';
+import Checklist from '../components/Checklist'
 
 export default function TasksScreen() {
   const route = useRoute();
-  const { listId } = route.params;
+  const {listId, listData, taskData } = route.params;
 
-  // const tasks = data.tasks.filter((task) => task.listId === listId);
+  const filteredTasks = taskData.filter(task => task.listId === listId);
 
   return (
     <View>
-      <Text> halló </Text>
+      <View>
+        <Text> {listData.name} </Text>
+        <FlatList
+            data={filteredTasks}
+            keyExtractor={(item) => item.id.toString()}
+            renderItem={({item}) => (
+                <Checklist
+                taskData={item}
+                />
+            )}  />
     </View>
-    // <View style={styles.container}>
-    //   <FlatList
-    //     data={tasks}
-    //     keyExtractor={(item) => item.id.toString()}
-    //     renderItem={({ item }) => (
-    //       <View style={styles.card}>
-    //         <Text style={styles.name}>{item.name}</Text>
-    //         <Text>{item.description}</Text>
-    //         <Text>Status: {item.isFinished ? 'Finished' : 'Pending'}</Text>
-    //       </View>
-    //     )}
-    //   />
-    // </View>
+    {/* <FlatList
+      data={filteredTasks}
+      keyExtractor={(item) => item.id.toString()}
+      renderItem={({ item }) => (
+      <View style={styles.card}>
+        <Checklist
+          taskData={item}
+        />
+      </View>
+      )}
+    /> */}
+    </View>
   );
 }
 
