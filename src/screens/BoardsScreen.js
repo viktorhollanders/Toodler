@@ -3,19 +3,21 @@ import { View, FlatList, StyleSheet } from 'react-native';
 import data from '../resources/data.json';
 import BoardCard from '../components/boardCard';
 import Toolbar from '../components/Toolbar';
+import AddBoardModal from '../components/AddBoardModal';
 
 export default function BoardsScreen() {
   const [boards, setBoards] = useState(data.boards);
   const [lists, setLists] = useState(data.lists);
   const [tasks, setTasks] = useState(data.tasks);
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 
   const [selectedBoards, setSelectedBoards] = useState([]);
 
   const setHidden = () => {
     setBoards((prevBoards) =>
       prevBoards.map((board) =>
-        selectedBoards.includes(board.id) ? { ...board, hidden: true } : board
-      )
+        selectedBoards.includes(board.id) ? { ...board, hidden: true } : board,
+      ),
     );
     setSelectedBoards([]);
   };
@@ -39,11 +41,16 @@ export default function BoardsScreen() {
   return (
     <View style={styles.container}>
       <Toolbar
+        hasSelected={selectedBoards.length > 0}
+        onAdd={() => setIsAddModalOpen(true)}
+        onEdit={() => console.log('Edit action')}
+        onRemove={() => console.log('Remove action')}
         hasSelected={selectedBoards.length}
         onAdd={() => console.log('Add action')}
         onEdit={() => console.log('Edit action')}
         onRemove={setHidden}
       />
+
       <FlatList
         data={visibleBoards}
         keyExtractor={(item) => item.id.toString()}
@@ -57,6 +64,13 @@ export default function BoardsScreen() {
             isSelected={selectedBoards.includes(item.id)}
           />
         )}
+      />
+
+      <AddBoardModal
+        isOpen={isAddModalOpen}
+        closeModal={() => setIsAddModalOpen(false)}
+        boardsData={boards}
+        setBoards={setBoards}
       />
     </View>
   );
