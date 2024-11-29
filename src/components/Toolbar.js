@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, TouchableHighlight, Text, StyleSheet } from 'react-native';
 
-const Toolbar = ({ hasSelected, onAdd, onRemove }) => (
+const Toolbar = ({ hasSelected, onAdd, onEdit, onRemove }) => (
   <View style={styles.toolbar}>
     <TouchableHighlight
       style={styles.toolbarAction}
@@ -10,7 +10,7 @@ const Toolbar = ({ hasSelected, onAdd, onRemove }) => (
     >
       <Text style={styles.toolbarActionText}>Add</Text>
     </TouchableHighlight>
-    
+
     <TouchableHighlight
       style={styles.toolbarAction}
       onPress={onEdit}
@@ -22,7 +22,7 @@ const Toolbar = ({ hasSelected, onAdd, onRemove }) => (
           !hasSelected ? { color: 'rgba(155, 155, 155, .5)' } : {},
         ]}>Edit</Text>
     </TouchableHighlight>
-    
+
 
     <TouchableHighlight
       style={styles.toolbarAction}
