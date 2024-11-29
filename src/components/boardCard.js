@@ -7,7 +7,7 @@ export default function BoardCard({ name, id, listData, taskData, onLongPress, i
   const { navigate } = useNavigation();
 
   const navigateToLists = (boardId) => {
-    navigate('Lists', { boardId, listData, taskData });
+    navigate('Lists', { boardId, listData, taskData, onLongPress });
   };
 
   return (

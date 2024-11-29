@@ -7,22 +7,25 @@ export default function TasksScreen() {
   const route = useRoute();
   const { listId } = route.params;
 
-  const tasks = data.tasks.filter((task) => task.listId === listId);
+  // const tasks = data.tasks.filter((task) => task.listId === listId);
 
   return (
-    <View style={styles.container}>
-      <FlatList
-        data={tasks}
-        keyExtractor={(item) => item.id.toString()}
-        renderItem={({ item }) => (
-          <View style={styles.card}>
-            <Text style={styles.name}>{item.name}</Text>
-            <Text>{item.description}</Text>
-            <Text>Status: {item.isFinished ? 'Finished' : 'Pending'}</Text>
-          </View>
-        )}
-      />
+    <View>
+      <Text> halló </Text>
     </View>
+    // <View style={styles.container}>
+    //   <FlatList
+    //     data={tasks}
+    //     keyExtractor={(item) => item.id.toString()}
+    //     renderItem={({ item }) => (
+    //       <View style={styles.card}>
+    //         <Text style={styles.name}>{item.name}</Text>
+    //         <Text>{item.description}</Text>
+    //         <Text>Status: {item.isFinished ? 'Finished' : 'Pending'}</Text>
+    //       </View>
+    //     )}
+    //   />
+    // </View>
   );
 }
 
