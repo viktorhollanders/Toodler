@@ -6,14 +6,32 @@ import BoardCard from '../components/boardCard';
 
 export default function BoardsScreen() {
   const [boards, setBoards] = useState(data.boards);
-  const navigation = useNavigation();
+  const [lists, setLists] = useState(data.lists);
+  const [tasks, setTasks] = useState(data.tasks);
+  const getBoardList = (boardId) => {
+    const filteredList = lists.filter((list) => list.boardId === boardId);
+    return filteredList;
+  };
+
+  const getlistTasks = (boardId) => {
+    const listIds = lists.filter((list) => list.boardId === boardId).map((list) => list.id);
+    const listTasks = tasks.filter((task) => task.listId in listIds);
+    return listTasks;
+  };
 
   return (
     <View style={styles.container}>
       <FlatList
         data={boards}
         keyExtractor={(item) => item.id.toString()}
-        renderItem={({ item }) => <BoardCard name={item.name} id={item.id} />}
+        renderItem={({ item }) => (
+          <BoardCard
+            name={item.name}
+            id={item.id}
+            listData={getBoardList(item.id)}
+            taskData={getlistTasks(item.id)}
+          />
+        )}
       />
     </View>
   );

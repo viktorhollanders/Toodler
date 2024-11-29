@@ -2,8 +2,10 @@ import React from 'react';
 import { View, FlatList, Text, Button, StyleSheet } from 'react-native';
 import { useRoute, useNavigation } from '@react-navigation/native';
 
-export default function ListsScreen() {
-  return <Text>I am a list screen</Text>;
+export default function ListsScreen({ route }) {
+  const { boardId, listData, taskData } = route.params;
+  console.log(listData);
+  console.log(taskData);
 }
 
 const styles = StyleSheet.create({
