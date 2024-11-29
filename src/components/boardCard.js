@@ -1,6 +1,7 @@
 import React from 'react';
 import { Text, View, Button, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export default function BoardCard({ name, id, listData, taskData }) {
   const { navigate } = useNavigation();
@@ -10,10 +11,11 @@ export default function BoardCard({ name, id, listData, taskData }) {
   };
 
   return (
-    <View style={styles.card}>
-      <Text style={styles.name}>{name}</Text>
-      <Button title="View Lists" onPress={() => navigateToLists(id, listData, taskData)} />
-    </View>
+    <TouchableOpacity onPress={() => navigateToLists(id, listData, taskData)}>
+      <View style={styles.card}>
+        <Text style={styles.name}>{name}</Text>
+      </View>
+    </TouchableOpacity>
   );
 }
 
