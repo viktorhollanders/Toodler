@@ -1,4 +1,4 @@
-import { View } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 
 export default function ButtonAdd() {
   return (
@@ -7,3 +7,4 @@ export default function ButtonAdd() {
     </View>
   );
 }
+
