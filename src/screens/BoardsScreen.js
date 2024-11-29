@@ -3,11 +3,13 @@ import { View, FlatList, StyleSheet } from 'react-native';
 import data from '../resources/data.json';
 import BoardCard from '../components/boardCard';
 import Toolbar from '../components/Toolbar';
+import AddBoardModal from '../components/AddBoardModal';
 
 export default function BoardsScreen() {
   const [boards, setBoards] = useState(data.boards);
   const [lists, setLists] = useState(data.lists);
   const [tasks, setTasks] = useState(data.tasks);
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 
   const [selectedBoards, setSelectedBoards] = useState([]);
 
@@ -30,9 +32,11 @@ export default function BoardsScreen() {
     <View style={styles.container}>
       <Toolbar
         hasSelected={selectedBoards.length > 0}
-        onAdd={() => console.log('Add action')}
+        onAdd={() => setIsAddModalOpen(true)}
+        onEdit={() => console.log('Edit action')}
         onRemove={() => console.log('Remove action')}
       />
+
       <FlatList
         data={boards}
         keyExtractor={(item) => item.id.toString()}
@@ -46,6 +50,13 @@ export default function BoardsScreen() {
             isSelected={selectedBoards.includes(item.id)}
           />
         )}
+      />
+
+      <AddBoardModal
+        isOpen={isAddModalOpen}
+        closeModal={() => setIsAddModalOpen(false)}
+        boardsData={boards}
+        setBoards={setBoards}
       />
     </View>
   );
