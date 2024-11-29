@@ -13,16 +13,7 @@ export default function BoardsScreen() {
 
   const [selectedBoards, setSelectedBoards] = useState([]);
 
-  const setHidden = () => {
-    setBoards((prevBoards) =>
-      prevBoards.map((board) =>
-        selectedBoards.includes(board.id) ? { ...board, hidden: true } : board,
-      ),
-    );
-    setSelectedBoards([]);
-  };
-
-  const onLongPressBoard = (boardId) => {
+  const onLongPress = (boardId) => {
     if (selectedBoards.includes(boardId)) {
       setSelectedBoards(selectedBoards.filter((board) => board !== boardId));
     } else {
@@ -31,7 +22,6 @@ export default function BoardsScreen() {
   };
 
   const getBoardList = (boardId) => lists.filter((list) => list.boardId === boardId);
-  const visibleBoards = boards.filter((board) => !board.hidden);
 
   const getListTasks = (boardId) => {
     const listIds = lists.filter((list) => list.boardId === boardId).map((list) => list.id);
@@ -45,14 +35,10 @@ export default function BoardsScreen() {
         onAdd={() => setIsAddModalOpen(true)}
         onEdit={() => console.log('Edit action')}
         onRemove={() => console.log('Remove action')}
-        hasSelected={selectedBoards.length}
-        onAdd={() => console.log('Add action')}
-        onEdit={() => console.log('Edit action')}
-        onRemove={setHidden}
       />
 
       <FlatList
-        data={visibleBoards}
+        data={boards}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
           <BoardCard
@@ -60,7 +46,7 @@ export default function BoardsScreen() {
             id={item.id}
             listData={getBoardList(item.id)}
             taskData={getListTasks(item.id)}
-            onLongPress={onLongPressBoard}
+            onLongPress={onLongPress}
             isSelected={selectedBoards.includes(item.id)}
           />
         )}
@@ -82,3 +68,4 @@ const styles = StyleSheet.create({
     padding: 20,
   },
 });
+git 
