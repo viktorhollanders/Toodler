@@ -18,8 +18,6 @@ export default function ListsScreen({ route }) {
     setSelectedLists([]);
   };
 
-  console.log(localListData);
-
   const onLongPressLists = (listId) => {
     if (selectedLists.includes(listId)) {
       setSelectedLists(selectedLists.filter((list) => list !== listId));

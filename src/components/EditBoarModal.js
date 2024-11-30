@@ -19,7 +19,10 @@ const EditBoardModal = ({ isOpen, closeModal, currBoardData, boardsData, setBoar
     }));
   };
 
-  const editBoard = () => {};
+  const editBoard = () => {
+    closeModal();
+  };
+
   const cancel = () => {
     closeModal();
   };

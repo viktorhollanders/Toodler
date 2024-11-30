@@ -20,12 +20,10 @@ export default function BoardCard({
     navigate('Lists', { boardId, boardName, listData, taskData, setLists, setTasks, onLongPress });
   };
 
-  console.log(thumbnailPhoto);
-
   return (
     <TouchableOpacity onPress={() => navigateToLists(id, name)} onLongPress={() => onLongPress(id)}>
       <View style={[styles.card, isSelected && styles.selectedCard]}>
-        <Image source={{uri: thumbnailPhoto}} style={styles.image}/>
+        <Image source={{ uri: thumbnailPhoto }} style={styles.image} />
         <Text style={styles.name}>{name}</Text>
       </View>
     </TouchableOpacity>
@@ -56,5 +54,5 @@ const styles = StyleSheet.create({
     flex: 1,
     borderRadius: 4,
     paddingBottom: 10,
-  }
+  },
 });

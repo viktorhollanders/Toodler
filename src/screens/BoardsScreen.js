@@ -39,10 +39,8 @@ export default function BoardsScreen() {
     return tasks.filter((task) => listIds.includes(task.listId));
   };
 
-  const selectedBoardsData = (boards, selectedBoards) => {
-    if (selectedBoards.length === 1) {
-      return boards.find((board) => board.id === selectedBoards[0]);
-    }
+  const selectedBoardsData = () => {
+    return boards.filter((board) => selectedBoards.includes(board.id));
   };
 
   return (
@@ -82,7 +80,7 @@ export default function BoardsScreen() {
         isOpen={isEditModalOpen}
         closeModal={() => setIsEditModalOpen(false)}
         boardsData={boards}
-        currBoardData={selectedBoards}
+        currBoardData={selectedBoardsData()}
         setBoards={setBoards}
       />
     </View>
