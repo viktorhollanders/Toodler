@@ -30,6 +30,10 @@ export default function ListsScreen({ route }) {
 
   const visibleLists = listData.filter((list) => !list.hidden);
 
+  const closeModal = () => {
+    setIsAddModalOpen(false);
+  };
+
   return (
     <View style={styles.container}>
       <Toolbar
@@ -78,7 +82,7 @@ const styles = StyleSheet.create({
     fontSize: mainStyles.fonts.md,
     textAlign: 'center',
     fontWeight: mainStyles.fontWeights.bold,
-    padding: 20
+    padding: 20,
   },
 
   card: {
