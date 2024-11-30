@@ -3,7 +3,7 @@ import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
 import { mainStyles } from '../styles/mainStyles';
 import Modal from './Modal';
 
-const AddListModal = ({ boardId, isOpen, closeModal, listData, setLists }) => {
+const AddListModal = ({ boardId, isOpen, closeModal, listData, setLists, setLocalListData }) => {
   const [formData, setFormData] = useState({
     id: 0,
     name: '',
@@ -31,6 +31,7 @@ const AddListModal = ({ boardId, isOpen, closeModal, listData, setLists }) => {
     };
 
     // Update the boards list
+    setLocalListData((prevLists) => [...prevLists, newList]);
     setLists((prevLists) => [...prevLists, newList]);
 
     setFormData({ id: 0, name: '', color: '#ffffff', boardId: boardId, hidden: false });

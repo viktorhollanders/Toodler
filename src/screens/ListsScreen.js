@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import { View, FlatList, StyleSheet, Text } from 'react-native';
-import TempListCard from '../components/ListCard';
+import ListCard from '../components/ListCard';
 import Toolbar from '../components/Toolbar';
 import AddListModal from '../components/AddListModal';
 import { mainStyles } from '../styles/mainStyles';
 
 export default function ListsScreen({ route }) {
+  const { boardId, boardName, listData, taskData, setLists, setTasks } = route.params;
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [selectedLists, setSelectedLists] = useState([]);
-
-  const { boardId, boardName, listData, taskData, setLists, setTasks } = route.params;
+  const [localListData, setLocalListData] = useState(listData);
 
   const setHidden = () => {
     setLists((prevLists) =>
@@ -18,7 +18,7 @@ export default function ListsScreen({ route }) {
     setSelectedLists([]);
   };
 
-  console.log(listData);
+  console.log(localListData);
 
   const onLongPressLists = (listId) => {
     if (selectedLists.includes(listId)) {
@@ -28,7 +28,7 @@ export default function ListsScreen({ route }) {
     }
   };
 
-  const visibleLists = listData.filter((list) => !list.hidden);
+  const visibleLists = localListData.filter((list) => !list.hidden);
 
   const closeModal = () => {
     setIsAddModalOpen(false);
@@ -49,7 +49,7 @@ export default function ListsScreen({ route }) {
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
           <View style={styles.card}>
-            <TempListCard
+            <ListCard
               listId={item.id}
               listName={item.name}
               listData={item}
@@ -68,6 +68,7 @@ export default function ListsScreen({ route }) {
         closeModal={() => closeModal()}
         listData={listData}
         setLists={setLists}
+        setLocalListData={setLocalListData}
       />
     </View>
   );
