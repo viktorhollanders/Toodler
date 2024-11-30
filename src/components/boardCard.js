@@ -20,6 +20,7 @@ export default function BoardCard({
     navigate('Lists', { boardId, boardName, listData, taskData, setLists, setTasks, onLongPress });
   };
 
+
   return (
     <TouchableOpacity onPress={() => navigateToLists(id, name)} onLongPress={() => onLongPress(id)}>
       <View style={[styles.card, isSelected && styles.selectedCard]}>

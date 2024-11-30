@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, FlatList, Text, StyleSheet } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import Checklist from '../components/Checklist';
@@ -6,17 +6,23 @@ import { mainStyles } from '../styles/mainStyles';
 
 export default function TasksScreen() {
   const route = useRoute();
-  const { listId, listName, listData, taskData } = route.params;
+  const { listId, listName, listData, setLists, setTasks, taskData } = route.params;
 
-  const filteredTasks = taskData.filter((task) => task.listId === listId);
+  const [tasks, setLocalTasks] = useState(
+    taskData.filter((task) => task.listId === listId && !task.hidden)
+  );
 
   return (
     <View style={styles.container}>
       <Text style={styles.listName}> {listName} </Text>
       <FlatList
-        data={filteredTasks}
+        data={tasks}
         keyExtractor={(item) => item.id.toString()}
-        renderItem={({ item }) => <Checklist taskData={item} />}
+        renderItem={({ item }) => 
+        <Checklist 
+        taskData={item} 
+        setLocalTasks={setLocalTasks}
+        />}
       />
     </View>
   );

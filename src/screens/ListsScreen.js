@@ -46,7 +46,6 @@ export default function ListsScreen({ route }) {
         data={visibleLists}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
-          <View style={styles.card}>
             <ListCard
               listId={item.id}
               listName={item.name}
@@ -56,7 +55,6 @@ export default function ListsScreen({ route }) {
               setTasks={setTasks}
               onLongPress={onLongPressLists}
             />
-          </View>
         )}
       />
 

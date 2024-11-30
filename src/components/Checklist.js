@@ -1,23 +1,28 @@
-import React, { useState } from 'react';
-import { Text, View, TouchableOpacity, StyleSheet } from 'react-native';
-import { MaterialIcons } from '@expo/vector-icons'; // Install using: expo install @expo/vector-icons
+import React from 'react';
+import { Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { MaterialIcons } from '@expo/vector-icons';
 
-export default function Checklist({ taskData, setTasks }) {
-  // State to track if the task is checked
-  const [isChecked, setIsChecked] = useState(taskData.checked || false);
-
-  // Toggle the checkbox
+export default function Checklist({ taskData, setLocalTasks }) {
+    
   const toggleChecked = () => {
-    setIsChecked((prevState) => !prevState);
+    setLocalTasks((prevTasks) =>
+      prevTasks.map((task) =>
+        task.id === taskData.id ? { ...task, isFinished: !task.isFinished } : task
+      )
+    );
   };
+  
+
   return (
     <TouchableOpacity onPress={toggleChecked} style={styles.container}>
       <MaterialIcons
-        name={isChecked ? 'check-box' : 'check-box-outline-blank'}
+        name={taskData.isFinished ? 'check-box' : 'check-box-outline-blank'}
         size={24}
-        color={isChecked ? 'green' : 'gray'}
+        color={taskData.isFinished ? 'green' : 'gray'}
       />
-      <Text style={[styles.text, isChecked && styles.checkedText]}>{taskData.description}</Text>
+      <Text style={[styles.text, taskData.isFinished && styles.checkedText]}>
+        {taskData.description}
+      </Text>
     </TouchableOpacity>
   );
 }
