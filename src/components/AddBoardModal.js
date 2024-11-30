@@ -35,7 +35,7 @@ const AddBoardModal = ({ isOpen, closeModal, boardsData, setBoards }) => {
 
   return (
     <Modal isOpen={isOpen} closeModal={closeModal}>
-      <View style={modal.inputForm}>
+      <View>
         <Text style={modal.inputLabel}></Text>
         <TextInput
           style={modal.input}
@@ -45,7 +45,7 @@ const AddBoardModal = ({ isOpen, closeModal, boardsData, setBoards }) => {
         />
       </View>
 
-      <View style={modal.inputForm}>
+      <View>
         <Text style={modal.inputLabel}></Text>
         <TextInput
           style={modal.input}
@@ -63,11 +63,16 @@ const AddBoardModal = ({ isOpen, closeModal, boardsData, setBoards }) => {
 };
 
 const modal = StyleSheet.create({
-  inputForm: {},
   inputLabel: {
     fontSize: mainStyles.fonts.sm,
   },
-  input: { height: 40, margin: 12, borderWidth: 1, padding: 10 },
+  input: {
+    height: 40,
+    margin: 12,
+    borderWidth: 1,
+    padding: 10,
+    borderRadius: 5,
+  },
 });
 
 export default AddBoardModal;

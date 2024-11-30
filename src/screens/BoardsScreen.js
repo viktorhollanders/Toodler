@@ -4,20 +4,21 @@ import data from '../resources/data.json';
 import BoardCard from '../components/boardCard';
 import Toolbar from '../components/Toolbar';
 import AddBoardModal from '../components/AddBoardModal';
+import EditBoardModal from '../components/EditBoarModal';
 
 export default function BoardsScreen() {
   const [boards, setBoards] = useState(data.boards);
   const [lists, setLists] = useState(data.lists);
   const [tasks, setTasks] = useState(data.tasks);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
-
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [selectedBoards, setSelectedBoards] = useState([]);
 
   const setHidden = () => {
     setBoards((prevBoards) =>
       prevBoards.map((board) =>
-        selectedBoards.includes(board.id) ? { ...board, hidden: true } : board
-      )
+        selectedBoards.includes(board.id) ? { ...board, hidden: true } : board,
+      ),
     );
     setSelectedBoards([]);
   };
@@ -38,12 +39,18 @@ export default function BoardsScreen() {
     return tasks.filter((task) => listIds.includes(task.listId));
   };
 
+  const selectedBoardsData = (boards, selectedBoards) => {
+    if (selectedBoards.length === 1) {
+      return boards.find((board) => board.id === selectedBoards[0]);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <Toolbar
         hasSelected={selectedBoards.length}
         onAdd={() => setIsAddModalOpen(true)}
-        onEdit={() => console.log('Edit action')}
+        onEdit={() => setIsEditModalOpen(true)}
         onRemove={setHidden}
       />
       <FlatList
@@ -68,6 +75,14 @@ export default function BoardsScreen() {
         isOpen={isAddModalOpen}
         closeModal={() => setIsAddModalOpen(false)}
         boardsData={boards}
+        setBoards={setBoards}
+      />
+
+      <EditBoardModal
+        isOpen={isEditModalOpen}
+        closeModal={() => setIsEditModalOpen(false)}
+        boardsData={boards}
+        currBoardData={selectedBoards}
         setBoards={setBoards}
       />
     </View>
