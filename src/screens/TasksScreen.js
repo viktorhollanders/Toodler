@@ -1,38 +1,23 @@
 import React from 'react';
 import { View, FlatList, Text, StyleSheet } from 'react-native';
 import { useRoute } from '@react-navigation/native';
-import Checklist from '../components/Checklist'
+import Checklist from '../components/Checklist';
+import { mainStyles } from '../styles/mainStyles';
 
 export default function TasksScreen() {
   const route = useRoute();
-  const {listId, listData, taskData } = route.params;
+  const { listId, listName, listData, taskData } = route.params;
 
-  const filteredTasks = taskData.filter(task => task.listId === listId);
+  const filteredTasks = taskData.filter((task) => task.listId === listId);
 
   return (
-    <View>
-      <View>
-        <Text> {listData.name} </Text>
-        <FlatList
-            data={filteredTasks}
-            keyExtractor={(item) => item.id.toString()}
-            renderItem={({item}) => (
-                <Checklist
-                taskData={item}
-                />
-            )}  />
-    </View>
-    {/* <FlatList
-      data={filteredTasks}
-      keyExtractor={(item) => item.id.toString()}
-      renderItem={({ item }) => (
-      <View style={styles.card}>
-        <Checklist
-          taskData={item}
-        />
-      </View>
-      )}
-    /> */}
+    <View style={styles.container}>
+      <Text style={styles.listName}> {listName} </Text>
+      <FlatList
+        data={filteredTasks}
+        keyExtractor={(item) => item.id.toString()}
+        renderItem={({ item }) => <Checklist taskData={item} />}
+      />
     </View>
   );
 }
@@ -40,6 +25,13 @@ export default function TasksScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    padding: 20,
+  },
+
+  listName: {
+    fontSize: mainStyles.fonts.md,
+    textAlign: 'center',
+    fontWeight: mainStyles.fontWeights.bold,
     padding: 20,
   },
   card: {

@@ -53,6 +53,7 @@ export default function BoardsScreen() {
           <BoardCard
             name={item.name}
             id={item.id}
+            thumbnailPhoto={item.thumbnailPhoto}
             listData={getBoardList(item.id)}
             taskData={getListTasks(item.id)}
             setLists={setLists}

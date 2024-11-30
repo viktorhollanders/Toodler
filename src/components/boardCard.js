@@ -1,21 +1,31 @@
 import React from 'react';
-import { Text, View, StyleSheet } from 'react-native';
+import { Text, View, StyleSheet, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-export default function BoardCard({ name, id, listData, taskData, setLists, setTasks, onLongPress, isSelected }) {
+export default function BoardCard({
+  name,
+  id,
+  thumbnailPhoto,
+  listData,
+  taskData,
+  setLists,
+  setTasks,
+  onLongPress,
+  isSelected,
+}) {
   const { navigate } = useNavigation();
 
-  const navigateToLists = (boardId) => {
-    navigate('Lists', { boardId, listData, taskData, setLists, setTasks, onLongPress });
+  const navigateToLists = (boardId, boardName) => {
+    navigate('Lists', { boardId, boardName, listData, taskData, setLists, setTasks, onLongPress });
   };
 
+  console.log(thumbnailPhoto);
+
   return (
-    <TouchableOpacity
-      onPress={() => navigateToLists(id)}
-      onLongPress={() => onLongPress(id)}
-    >
+    <TouchableOpacity onPress={() => navigateToLists(id, name)} onLongPress={() => onLongPress(id)}>
       <View style={[styles.card, isSelected && styles.selectedCard]}>
+        <Image source={{uri: thumbnailPhoto}} style={styles.image}/>
         <Text style={styles.name}>{name}</Text>
       </View>
     </TouchableOpacity>
@@ -40,4 +50,11 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
   },
+
+  image: {
+    height: 100,
+    flex: 1,
+    borderRadius: 4,
+    paddingBottom: 10,
+  }
 });

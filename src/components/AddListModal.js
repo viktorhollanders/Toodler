@@ -3,11 +3,13 @@ import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
 import { mainStyles } from '../styles/mainStyles';
 import Modal from './Modal';
 
-const AddBoardModal = ({ isOpen, closeModal, boardsData, setBoards }) => {
+const AddListModal = ({ boardId, isOpen, closeModal, listData, setLists }) => {
   const [formData, setFormData] = useState({
     id: 0,
     name: '',
-    thumbnailPhoto: '',
+    color: '#ffffff',
+    boardId: boardId,
+    hidden: false,
   });
 
   const handleInputChange = (field, value) => {
@@ -17,22 +19,23 @@ const AddBoardModal = ({ isOpen, closeModal, boardsData, setBoards }) => {
     }));
   };
 
-  const addBoard = () => {
-    const newBoardId = Math.max(...boardsData.map((board) => board.id)) + 1;
+  const addList = () => {
+    const newListId = Math.max(...listData.map((list) => list.id)) + 1;
 
-    const newBoard = {
-      id: newBoardId,
+    const newList = {
+      id: newListId,
       name: formData.name,
-      thumbnailPhoto: formData.thumbnailPhoto,
+      color: formData.color,
+      boardId: formData.boardId,
+      hidden: formData.hidden,
     };
 
     // Update the boards list
-    setBoards((prevBoards) => [...prevBoards, newBoard]);
+    setLists((prevLists) => [...prevLists, newList]);
 
-    setFormData({ id: 0, name: '', thumbnailPhoto: '' }); // Reset form
+    setFormData({ id: 0, name: '', color: '#ffffff', boardId: boardId, hidden: false });
     closeModal();
   };
-
   return (
     <Modal isOpen={isOpen} closeModal={closeModal}>
       <View style={modal.inputForm}>
@@ -45,18 +48,8 @@ const AddBoardModal = ({ isOpen, closeModal, boardsData, setBoards }) => {
         />
       </View>
 
-      <View style={modal.inputForm}>
-        <Text style={modal.inputLabel}></Text>
-        <TextInput
-          style={modal.input}
-          placeholder="Enter image link"
-          onChangeText={(value) => handleInputChange('thumbnailPhoto', value)}
-          value={formData.thumbnailPhoto}
-        />
-      </View>
-
-      <Button title={'Add Board'} onPress={addBoard}>
-        Add Board
+      <Button title={'Add List'} onPress={addList}>
+        Add List
       </Button>
     </Modal>
   );
@@ -70,4 +63,4 @@ const modal = StyleSheet.create({
   input: { height: 40, margin: 12, borderWidth: 1, padding: 10 },
 });
 
-export default AddBoardModal;
+export default AddListModal;

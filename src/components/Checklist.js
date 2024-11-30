@@ -2,13 +2,13 @@ import React, { useState } from "react";
 import { Text, View, TouchableOpacity, StyleSheet } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons"; // Install using: expo install @expo/vector-icons
 
-export default function Checklist({ taskData }) {
+export default function Checklist({ taskData, setTasks }) {
     // State to track if the task is checked
     const [isChecked, setIsChecked] = useState(taskData.checked || false);
 
     // Toggle the checkbox
     const toggleChecked = () => {
-        setIsChecked((prevState) => !prevState);
+        setTasks((prevState) => !prevState);
     };
     return (
         <TouchableOpacity onPress={toggleChecked} style={styles.container}>
