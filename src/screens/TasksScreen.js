@@ -2,27 +2,32 @@ import React, { useState } from 'react';
 import { View, FlatList, Text, StyleSheet } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import Checklist from '../components/Checklist';
+import Toolbar from '../components/Toolbar';
 import { mainStyles } from '../styles/mainStyles';
 
 export default function TasksScreen() {
   const route = useRoute();
   const { listId, listName, listData, setLists, setTasks, taskData } = route.params;
-  const [tasks, setLocalTasks] = useState(
-
-    taskData.filter((task) => task.listId === listId && !task.hidden)
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [localTasks, setLocalTasks] = useState(
+    taskData.filter((task) => task.listId === listId && !task.hidden),
   );
 
   return (
     <View style={styles.container}>
+      <Toolbar
+        hasSelected={selectedLists.length}
+        onAdd={() => setIsAddModalOpen(true)}
+        onEdit={() => setIsEditModalOpen(true)}
+        onRemove={setHidden}
+      />
+
       <Text style={styles.listName}> {listName} </Text>
       <FlatList
         data={tasks}
         keyExtractor={(item) => item.id.toString()}
-        renderItem={({ item }) =>
-        <Checklist
-        taskData={item}
-        setLocalTasks={setLocalTasks}
-        />}
+        renderItem={({ item }) => <Checklist taskData={item} setLocalTasks={setLocalTasks} />}
       />
     </View>
   );
