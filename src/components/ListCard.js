@@ -7,6 +7,7 @@ import ListTasks from './ListTasks';
 export default function ListCard({
   listId,
   listName,
+  listColor,
   taskData,
   setTasks,
   setLocaListTaskData,
@@ -26,13 +27,14 @@ export default function ListCard({
   };
 
   const filteredTasks = taskData.filter((task) => task.listId === listId);
+  console.log(listColor);
 
   return (
     <TouchableOpacity
       onPress={() => navigateToTasks(listId, listName)}
       onLongPress={() => onLongPress(listId)}
     >
-      <View style={[styles.card, isSelected && styles.selectedCard]}>
+      <View style={[styles.card, { shadowColor: listColor }, isSelected && styles.selectedCard]}>
         <Text style={styles.name}> {listName} </Text>
         <FlatList
           data={filteredTasks}
@@ -50,10 +52,9 @@ const styles = StyleSheet.create({
     padding: 15,
     marginBottom: 10,
     borderRadius: 8,
-    shadowColor: '#000',
-    shadowOpacity: 0.1,
+    shadowOpacity: 0.2,
     shadowRadius: 4,
-    elevation: 2,
+    elevation: 3,
   },
   selectedCard: {
     opacity: 0.5,

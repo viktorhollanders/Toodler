@@ -62,6 +62,7 @@ export default function ListsScreen({ route }) {
           <ListCard
             listId={item.id}
             listName={item.name}
+            listColor={item.color}
             taskData={locaListTaskData}
             setTasks={setTasks}
             setLocaListTaskData={setLocaListTaskData}
@@ -106,20 +107,5 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontWeight: mainStyles.fontWeights.bold,
     padding: 20,
-  },
-
-  card: {
-    backgroundColor: '#fff',
-    padding: 15,
-    marginBottom: 10,
-    borderRadius: 8,
-    shadowColor: '#000',
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 2,
-  },
-  name: {
-    fontSize: 18,
-    fontWeight: 'bold',
   },
 });
