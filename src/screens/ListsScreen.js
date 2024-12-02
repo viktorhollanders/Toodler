@@ -3,11 +3,13 @@ import { View, FlatList, StyleSheet, Text } from 'react-native';
 import ListCard from '../components/ListCard';
 import Toolbar from '../components/Toolbar';
 import AddListModal from '../components/AddListModal';
+import EditListModal from '../components/EditListModal';
 import { mainStyles } from '../styles/mainStyles';
 
 export default function ListsScreen({ route }) {
   const { boardId, boardName, listData, taskData, setLists, setTasks } = route.params;
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [selectedLists, setSelectedLists] = useState([]);
   const [localListData, setLocalListData] = useState(listData);
 
@@ -32,12 +34,18 @@ export default function ListsScreen({ route }) {
     setIsAddModalOpen(false);
   };
 
+  const onEditSelect = (currentSelected) => {
+    if (currentSelected.length === 1) {
+      return visibleLists.filter((list) => list.id === currentSelected[0])[0];
+    }
+  };
+
   return (
     <View style={styles.container}>
       <Toolbar
         hasSelected={selectedLists.length}
         onAdd={() => setIsAddModalOpen(true)}
-        onEdit={() => console.log('Edit action')}
+        onEdit={() => setIsEditModalOpen(true)}
         onRemove={setHidden}
       />
 
@@ -65,6 +73,21 @@ export default function ListsScreen({ route }) {
         localListData={localListData}
         setLists={setLists}
         setLocalListData={setLocalListData}
+      />
+
+      <EditListModal
+        isOpen={isEditModalOpen}
+        closeModal={() => setIsEditModalOpen(false)}
+        listData={localListData}
+        currListData={selectedLists.length === 1 ? onEditSelect(selectedLists) : null}
+        updateList={(updateList) => {
+          setLists((prevList) =>
+            prevList.map((list) => (list.id === updateList.id ? { ...list, ...updateList } : list)),
+          );
+          setLocalListData((prevList) =>
+            prevList.map((list) => (list.id === updateList.id ? { ...list, ...updateList } : list)),
+          );
+        }}
       />
     </View>
   );
