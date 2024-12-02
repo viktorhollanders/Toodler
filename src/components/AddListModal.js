@@ -3,7 +3,14 @@ import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
 import { mainStyles } from '../styles/mainStyles';
 import Modal from './Modal';
 
-const AddListModal = ({ boardId, isOpen, closeModal, listData, setLists, setLocalListData }) => {
+const AddListModal = ({
+  boardId,
+  isOpen,
+  closeModal,
+  localListData,
+  setLists,
+  setLocalListData,
+}) => {
   const [formData, setFormData] = useState({
     id: 0,
     name: '',
@@ -20,7 +27,7 @@ const AddListModal = ({ boardId, isOpen, closeModal, listData, setLists, setLoca
   };
 
   const addList = () => {
-    const newListId = Math.max(...listData.map((list) => list.id)) + 1;
+    const newListId = Math.max(...localListData.map((list) => list.id)) + 1;
 
     const newList = {
       id: newListId,
