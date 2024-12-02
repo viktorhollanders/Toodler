@@ -14,6 +14,10 @@ export default function ListsScreen({ route }) {
   const [localListData, setLocalListData] = useState(listData);
 
   const setHidden = () => {
+    setLocalListData((prevLists) =>
+      prevLists.map((list) => (selectedLists.includes(list.id) ? { ...list, hidden: true } : list)),
+    );
+    setSelectedLists([]);
     setLists((prevLists) =>
       prevLists.map((list) => (selectedLists.includes(list.id) ? { ...list, hidden: true } : list)),
     );
