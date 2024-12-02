@@ -15,7 +15,7 @@ const AddListModal = ({
     id: 0,
     name: '',
     color: '#ffffff',
-    boardId: boardId,
+    boardId,
     hidden: false,
   });
 
@@ -41,7 +41,6 @@ const AddListModal = ({
     setLocalListData((prevLists) => [...prevLists, newList]);
     setLists((prevLists) => [...prevLists, newList]);
 
-    setFormData({ id: 0, name: '', color: '#ffffff', boardId: boardId, hidden: false });
     closeModal();
   };
   return (

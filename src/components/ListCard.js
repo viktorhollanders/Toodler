@@ -9,7 +9,7 @@ export default function ListCard({
   listName,
   taskData,
   setTasks,
-  setlocalListTaskData,
+  setLocaListTaskData,
   onLongPress,
   isSelected,
 }) {
@@ -21,7 +21,7 @@ export default function ListCard({
       listName,
       setTasks,
       taskData,
-      setlocalListTaskData,
+      setLocaListTaskData,
     });
   };
 

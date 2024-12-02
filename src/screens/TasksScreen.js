@@ -3,11 +3,11 @@ import { View, FlatList, Text, StyleSheet } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import TaskCard from '../components/TaskCard';
 import Toolbar from '../components/Toolbar';
+import AddTaskModal from '../components/AddTaskModal';
 import { mainStyles } from '../styles/mainStyles';
 
-export default function TasksScreen() {
-  const route = useRoute();
-  const { listId, listName, setTasks, taskData, setlocalListTaskData } = route.params;
+export default function TasksScreen({ route }) {
+  const { listId, listName, setTasks, taskData, setLocaListTaskData } = route.params;
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [localTasksData, setLocalTasksData] = useState(
@@ -20,7 +20,7 @@ export default function TasksScreen() {
       prevTask.map((task) => (selectedTasks.includes(task.id) ? { ...task, hidden: true } : task)),
     );
     setSelectedTasks([]);
-    setlocalListTaskData((prevTask) =>
+    setLocaListTaskData((prevTask) =>
       prevTask.map((task) => (selectedTasks.includes(task.id) ? { ...task, hidden: true } : task)),
     );
     setSelectedTasks([]);
@@ -60,7 +60,7 @@ export default function TasksScreen() {
     );
 
     //Update the list
-    setlocalListTaskData((prevLocalListTasks) =>
+    setLocaListTaskData((prevLocalListTasks) =>
       prevLocalListTasks.map((task) =>
         task.id === taskId ? { ...task, isFinished: !task.isFinished } : task,
       ),
@@ -88,6 +88,16 @@ export default function TasksScreen() {
             onLongPress={onLongPressTasks}
           />
         )}
+      />
+
+      <AddTaskModal
+        listId={listId}
+        isOpen={isAddModalOpen}
+        closeModal={() => closeModal()}
+        localListData={localTasksData}
+        setTasks={setTasks}
+        setLocaListTaskData={setLocaListTaskData}
+        setLocalTasksData={setLocalTasksData}
       />
     </View>
   );

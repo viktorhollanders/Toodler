@@ -3,7 +3,15 @@ import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
 import { mainStyles } from '../styles/mainStyles';
 import Modal from './Modal';
 
-const AddTaskModal = ({ listId, isOpen, closeModal, localTaskData, setTask, setTaskData }) => {
+const AddTaskModal = ({
+  listId,
+  isOpen,
+  closeModal,
+  localListData,
+  setTasks,
+  setLocaListTaskData,
+  setLocalTasksData,
+}) => {
   const [formData, setFormData] = useState({
     id: 0,
     name: '',
@@ -21,10 +29,10 @@ const AddTaskModal = ({ listId, isOpen, closeModal, localTaskData, setTask, setT
   };
 
   const addTask = () => {
-    const newTaskId = Math.max(...localTaskData.map((list) => list.id)) + 1;
+    const newTaskId = Math.max(...localListData.map((task) => task.id)) + 1;
 
     const newTask = {
-      id: newListId,
+      id: newTaskId,
       name: formData.name,
       description: formData.description,
       isFinished: formData.isFinished,
@@ -33,8 +41,9 @@ const AddTaskModal = ({ listId, isOpen, closeModal, localTaskData, setTask, setT
     };
 
     // Update the boards list
-    setTaskData((prevLists) => [...prevLists, newTask]);
-    setTask((prevLists) => [...prevLists, newTask]);
+    setTasks((prevLists) => [...prevLists, newTask]);
+    setLocalTasksData((prevLists) => [...prevLists, newTask]);
+    setLocaListTaskData((prevLists) => [...prevLists, newTask]);
 
     closeModal();
   };

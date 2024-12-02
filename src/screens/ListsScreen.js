@@ -12,7 +12,7 @@ export default function ListsScreen({ route }) {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [selectedLists, setSelectedLists] = useState([]);
   const [localListData, setLocalListData] = useState(listData);
-  const [localListTaskData, setlocalListTaskData] = useState(taskData);
+  const [locaListTaskData, setLocaListTaskData] = useState(taskData);
 
   const setHidden = () => {
     setLocalListData((prevLists) =>
@@ -62,9 +62,9 @@ export default function ListsScreen({ route }) {
           <ListCard
             listId={item.id}
             listName={item.name}
-            taskData={localListTaskData}
+            taskData={locaListTaskData}
             setTasks={setTasks}
-            setlocalListTaskData={setlocalListTaskData}
+            setLocaListTaskData={setLocaListTaskData}
             onLongPress={onLongPressLists}
           />
         )}
