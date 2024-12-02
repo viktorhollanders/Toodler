@@ -82,7 +82,6 @@ export default function ListsScreen({ route }) {
       <EditListModal
         isOpen={isEditModalOpen}
         closeModal={() => setIsEditModalOpen(false)}
-        listData={localListData}
         currListData={selectedLists.length === 1 ? onEditSelect(selectedLists) : null}
         updateList={(updateList) => {
           setLists((prevList) =>

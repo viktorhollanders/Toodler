@@ -4,6 +4,7 @@ import { useRoute } from '@react-navigation/native';
 import TaskCard from '../components/TaskCard';
 import Toolbar from '../components/Toolbar';
 import AddTaskModal from '../components/AddTaskModal';
+import EditTaskModal from '../components/EditTaskModal';
 import { mainStyles } from '../styles/mainStyles';
 
 export default function TasksScreen({ route }) {
@@ -67,6 +68,13 @@ export default function TasksScreen({ route }) {
     );
   };
 
+  const onEditSelect = (currentSelected) => {
+    if (currentSelected.length === 1) {
+      return visibleTasks.find((task) => task.id === currentSelected[0]) || null;
+    }
+    return null;
+  };
+
   return (
     <View style={styles.container}>
       <Toolbar
@@ -94,10 +102,27 @@ export default function TasksScreen({ route }) {
         listId={listId}
         isOpen={isAddModalOpen}
         closeModal={() => closeModal()}
-        localListData={localTasksData}
+        currTaskData={localTasksData}
         setTasks={setTasks}
         setLocaListTaskData={setLocaListTaskData}
         setLocalTasksData={setLocalTasksData}
+      />
+
+      <EditTaskModal
+        isOpen={isEditModalOpen}
+        closeModal={() => setIsEditModalOpen(false)}
+        currTaskData={selectedTasks.length === 1 ? onEditSelect(selectedTasks) : null}
+        updateTask={(updateTask) => {
+          setTasks((prevTask) =>
+            prevTask.map((task) => (task.id === updateTask.id ? { ...task, ...updateTask } : task)),
+          );
+          setLocaListTaskData((prevTask) =>
+            prevTask.map((task) => (task.id === updateTask.id ? { ...task, ...updateTask } : task)),
+          );
+          setLocalTasks((prevTask) =>
+            prevTask.map((task) => (task.id === updateTask.id ? { ...task, ...updateTask } : task)),
+          );
+        }}
       />
     </View>
   );

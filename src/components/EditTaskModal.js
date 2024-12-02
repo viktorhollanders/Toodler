@@ -3,46 +3,57 @@ import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
 import { mainStyles } from '../styles/mainStyles';
 import Modal from './Modal';
 
-const EditListModal = ({ isOpen, closeModal, currListData, updateList }) => {
-  if (!currListData) {
+const EditTaskModal = ({ isOpen, closeModal, currTaskData, updateTask }) => {
+  if (!currTaskData) {
     return null; // Do not render if no board is passed
   }
 
-  const [currentList, setCurrentList] = useState({
-    name: currListData.name,
+  const [currentTask, setCurrentTask] = useState({
+    name: currTaskData.name,
+    description: currTaskData.description,
   });
 
   const handleInputChange = (field, value) => {
-    setCurrentList((prevData) => ({
+    setCurrentTask((prevData) => ({
       ...prevData,
       [field]: value,
     }));
   };
 
-  const editList = () => {
-    const updatedList = {
-      ...currListData,
-      ...currentList, // Merge updated fields
+  const editTask = () => {
+    const updatedTask = {
+      ...currTaskData,
+      ...currentTask, // Merge updated fields
     };
 
-    updateList(updatedList); // Save changes to parent state
+    updateTask(updatedTask); // Save changes to parent state
     closeModal();
   };
 
   return (
     <Modal isOpen={isOpen} closeModal={closeModal}>
       <View>
-        <Text style={modal.inputLabel}>List Name:</Text>
+        <Text style={modal.inputLabel}>Task name:</Text>
         <TextInput
           style={modal.input}
-          placeholder="Enter list name"
+          placeholder="Enter task name"
           onChangeText={(value) => handleInputChange('name', value)}
-          value={currentList.name}
+          value={currentTask.name}
         />
       </View>
 
       <View>
-        <Button title={'Save Changes'} onPress={editList} />
+        <Text style={modal.inputLabel}>Task description:</Text>
+        <TextInput
+          style={modal.input}
+          placeholder="Enter task description"
+          onChangeText={(value) => handleInputChange('description', value)}
+          value={currentTask.description}
+        />
+      </View>
+
+      <View>
+        <Button title={'Save Changes'} onPress={editTask} />
         <Button title={'Cancel'} onPress={closeModal} color={mainStyles.colors.error} />
       </View>
     </Modal>
@@ -64,4 +75,4 @@ const modal = StyleSheet.create({
   },
 });
 
-export default EditListModal;
+export default EditTaskModal;
