@@ -7,8 +7,8 @@ import { mainStyles } from '../styles/mainStyles';
 export default function TasksScreen() {
   const route = useRoute();
   const { listId, listName, listData, setLists, setTasks, taskData } = route.params;
-
   const [tasks, setLocalTasks] = useState(
+
     taskData.filter((task) => task.listId === listId && !task.hidden)
   );
 
@@ -18,9 +18,9 @@ export default function TasksScreen() {
       <FlatList
         data={tasks}
         keyExtractor={(item) => item.id.toString()}
-        renderItem={({ item }) => 
-        <Checklist 
-        taskData={item} 
+        renderItem={({ item }) =>
+        <Checklist
+        taskData={item}
         setLocalTasks={setLocalTasks}
         />}
       />

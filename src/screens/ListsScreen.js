@@ -46,15 +46,15 @@ export default function ListsScreen({ route }) {
         data={visibleLists}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
-            <ListCard
-              listId={item.id}
-              listName={item.name}
-              listData={item}
-              taskData={taskData}
-              setLists={setLists}
-              setTasks={setTasks}
-              onLongPress={onLongPressLists}
-            />
+          <ListCard
+            listId={item.id}
+            listName={item.name}
+            listData={item}
+            taskData={taskData}
+            setLists={setLists}
+            setTasks={setTasks}
+            onLongPress={onLongPressLists}
+          />
         )}
       />
 
@@ -62,7 +62,7 @@ export default function ListsScreen({ route }) {
         boardId={boardId}
         isOpen={isAddModalOpen}
         closeModal={() => closeModal()}
-        listData={listData}
+        localListData={localListData}
         setLists={setLists}
         setLocalListData={setLocalListData}
       />
