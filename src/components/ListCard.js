@@ -2,7 +2,7 @@ import React from 'react';
 import { Text, View, FlatList, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import TaskCard from './ListTasks';
+import ListTasks from './ListTasks';
 
 export default function ListCard({
   listId,
@@ -32,7 +32,7 @@ export default function ListCard({
         <FlatList
           data={filteredTasks}
           keyExtractor={(item) => item.id.toString()}
-          renderItem={({ item }) => <TaskCard taskData={item} />}
+          renderItem={({ item }) => <ListTasks taskData={item} />}
         />
       </View>
     </TouchableOpacity>

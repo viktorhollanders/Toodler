@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, FlatList, Text, StyleSheet } from 'react-native';
 import { useRoute } from '@react-navigation/native';
-import Checklist from '../components/Checklist';
+import TaskCard from '../components/TaskCard';
 import Toolbar from '../components/Toolbar';
 import { mainStyles } from '../styles/mainStyles';
 
@@ -16,18 +16,18 @@ export default function TasksScreen() {
 
   return (
     <View style={styles.container}>
-      <Toolbar
+      {/* <Toolbar
         hasSelected={selectedLists.length}
         onAdd={() => setIsAddModalOpen(true)}
         onEdit={() => setIsEditModalOpen(true)}
         onRemove={setHidden}
-      />
+      /> */}
 
       <Text style={styles.listName}> {listName} </Text>
       <FlatList
-        data={tasks}
+        data={localTasks}
         keyExtractor={(item) => item.id.toString()}
-        renderItem={({ item }) => <Checklist taskData={item} setLocalTasks={setLocalTasks} />}
+        renderItem={({ item }) => <TaskCard taskData={item} setLocalTasks={setLocalTasks} />}
       />
     </View>
   );

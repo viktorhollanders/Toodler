@@ -2,16 +2,14 @@ import React from 'react';
 import { Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 
-export default function Checklist({ taskData, setLocalTasks }) {
-    
+export default function TaskCard({ taskData, setLocalTasks }) {
   const toggleChecked = () => {
     setLocalTasks((prevTasks) =>
       prevTasks.map((task) =>
-        task.id === taskData.id ? { ...task, isFinished: !task.isFinished } : task
-      )
+        task.id === taskData.id ? { ...task, isFinished: !task.isFinished } : task,
+      ),
     );
   };
-  
 
   return (
     <TouchableOpacity onPress={toggleChecked} style={styles.container}>
