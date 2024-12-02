@@ -39,8 +39,10 @@ export default function BoardsScreen() {
     return tasks.filter((task) => listIds.includes(task.listId));
   };
 
-  const selectedBoardsData = () => {
-    return boards.filter((board) => selectedBoards.includes(board.id));
+  const onEditSelect = (currentSelected) => {
+    if (currentSelected.length === 1) {
+      return visibleBoards.filter((board) => board.id === currentSelected[0])[0];
+    }
   };
 
   return (
@@ -81,8 +83,14 @@ export default function BoardsScreen() {
         isOpen={isEditModalOpen}
         closeModal={() => setIsEditModalOpen(false)}
         boardsData={boards}
-        currBoardData={selectedBoardsData()}
-        setBoards={setBoards}
+        currBoardData={selectedBoards.length === 1 ? onEditSelect(selectedBoards) : null}
+        updateBoard={(updatedBoard) => {
+          setBoards((prevBoards) =>
+            prevBoards.map((board) =>
+              board.id === updatedBoard.id ? { ...board, ...updatedBoard } : board,
+            ),
+          );
+        }}
       />
     </View>
   );

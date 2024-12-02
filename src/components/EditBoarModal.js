@@ -3,43 +3,58 @@ import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
 import { mainStyles } from '../styles/mainStyles';
 import Modal from './Modal';
 
-const EditBoardModal = ({ isOpen, closeModal, currBoardData, boardsData, setBoards }) => {
-  const [curBoardId, curBoardName, curBoardThumbnailPhoto, curBoardHidden] = currBoardData;
+const EditBoardModal = ({ isOpen, closeModal, currBoardData, updateBoard }) => {
+  if (!currBoardData) {
+    return null; // Do not render if no board is passed
+  }
+
   const [currentBoard, setCurrentBoard] = useState({
-    boardId: curBoardId,
-    name: curBoardName,
-    thumbnailPhoto: curBoardThumbnailPhoto,
-    boardHidden: curBoardHidden,
+    name: currBoardData.name,
+    description: currBoardData.description,
+    thumbnailPhoto: currBoardData.thumbnailPhoto,
   });
 
   const handleInputChange = (field, value) => {
     setCurrentBoard((prevData) => ({
       ...prevData,
-      [field]: value, // Dynamically update the specific field
+      [field]: value,
     }));
   };
 
   const editBoard = () => {
+    const updatedBoard = {
+      ...currBoardData,
+      ...currentBoard, // Merge updated fields
+    };
+
+    updateBoard(updatedBoard); // Save changes to parent state
     closeModal();
   };
 
-  const cancel = () => {
-    closeModal();
-  };
   return (
     <Modal isOpen={isOpen} closeModal={closeModal}>
       <View>
-        <Text style={modal.inputLabel}></Text>
+        <Text style={modal.inputLabel}>Board Name:</Text>
         <TextInput
           style={modal.input}
           placeholder="Enter board name"
-          onChangeText={(value) => handleInputChange('boardName', value)}
+          onChangeText={(value) => handleInputChange('name', value)}
           value={currentBoard.name}
         />
       </View>
 
       <View>
-        <Text style={modal.inputLabel}></Text>
+        <Text style={modal.inputLabel}>Description:</Text>
+        <TextInput
+          style={modal.input}
+          placeholder="Enter board description"
+          onChangeText={(value) => handleInputChange('description', value)}
+          value={currentBoard.description}
+        />
+      </View>
+
+      <View>
+        <Text style={modal.inputLabel}>Thumbnail URL:</Text>
         <TextInput
           style={modal.input}
           placeholder="Enter image link"
@@ -49,8 +64,8 @@ const EditBoardModal = ({ isOpen, closeModal, currBoardData, boardsData, setBoar
       </View>
 
       <View>
-        <Button title={'Edit Board'} onPress={editBoard} />
-        <Button title={'Cancel'} onPress={cancel} color={mainStyles.colors.error} />
+        <Button title={'Save Changes'} onPress={editBoard} />
+        <Button title={'Cancel'} onPress={closeModal} color={mainStyles.colors.error} />
       </View>
     </Modal>
   );
