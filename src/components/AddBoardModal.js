@@ -5,8 +5,8 @@ import Modal from './Modal';
 
 const AddBoardModal = ({ isOpen, closeModal, boardsData, setBoards }) => {
   const [formData, setFormData] = useState({
-    id: 0,
     name: '',
+    description: '',
     thumbnailPhoto: '',
   });
 
@@ -42,6 +42,16 @@ const AddBoardModal = ({ isOpen, closeModal, boardsData, setBoards }) => {
           placeholder="Enter board name"
           onChangeText={(value) => handleInputChange('name', value)}
           value={formData.name}
+        />
+      </View>
+
+      <View>
+        <Text style={modal.inputLabel}></Text>
+        <TextInput
+          style={modal.input}
+          placeholder="Enter board description"
+          onChangeText={(value) => handleInputChange('description', value)}
+          value={formData.description}
         />
       </View>
 
