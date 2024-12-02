@@ -7,17 +7,22 @@ import ListTasks from './ListTasks';
 export default function ListCard({
   listId,
   listName,
-  listData,
   taskData,
-  setLists,
   setTasks,
+  setlocalListTaskData,
   onLongPress,
   isSelected,
 }) {
   const { navigate } = useNavigation();
 
   const navigateToTasks = (listId, listName) => {
-    navigate('Tasks', { listId, listName, listData, setLists, setTasks, taskData });
+    navigate('Tasks', {
+      listId,
+      listName,
+      setTasks,
+      taskData,
+      setlocalListTaskData,
+    });
   };
 
   const filteredTasks = taskData.filter((task) => task.listId === listId);

@@ -7,27 +7,87 @@ import { mainStyles } from '../styles/mainStyles';
 
 export default function TasksScreen() {
   const route = useRoute();
-  const { listId, listName, listData, setLists, setTasks, taskData } = route.params;
+  const { listId, listName, setTasks, taskData, setlocalListTaskData } = route.params;
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const [localTasks, setLocalTasks] = useState(
+  const [localTasksData, setLocalTasksData] = useState(
     taskData.filter((task) => task.listId === listId && !task.hidden),
   );
+  const [selectedTasks, setSelectedTasks] = useState([]);
+
+  const setHidden = () => {
+    setLocalTasksData((prevTask) =>
+      prevTask.map((task) => (selectedTasks.includes(task.id) ? { ...task, hidden: true } : task)),
+    );
+    setSelectedTasks([]);
+    setlocalListTaskData((prevTask) =>
+      prevTask.map((task) => (selectedTasks.includes(task.id) ? { ...task, hidden: true } : task)),
+    );
+    setSelectedTasks([]);
+    setTasks((prevLists) =>
+      prevLists.map((task) => (selectedTasks.includes(task.id) ? { ...task, hidden: true } : task)),
+    );
+    setSelectedTasks([]);
+  };
+
+  const onLongPressTasks = (taskId) => {
+    if (selectedTasks.includes(taskId)) {
+      setSelectedTasks(selectedTasks.filter((task) => task !== taskId));
+    } else {
+      setSelectedTasks([...selectedTasks, taskId]);
+    }
+  };
+
+  const visibleTasks = localTasksData.filter((list) => !list.hidden);
+
+  const closeModal = () => {
+    setIsAddModalOpen(false);
+  };
+
+  const onToggleCheck = (taskId) => {
+    // Update local state
+    setLocalTasks((prevTasks) =>
+      prevTasks.map((task) =>
+        task.id === taskId ? { ...task, isFinished: !task.isFinished } : task,
+      ),
+    );
+
+    // Update global state
+    setTasks((prevGlobalTasks) =>
+      prevGlobalTasks.map((task) =>
+        task.id === taskId ? { ...task, isFinished: !task.isFinished } : task,
+      ),
+    );
+
+    //Update the list
+    setlocalListTaskData((prevLocalListTasks) =>
+      prevLocalListTasks.map((task) =>
+        task.id === taskId ? { ...task, isFinished: !task.isFinished } : task,
+      ),
+    );
+  };
 
   return (
     <View style={styles.container}>
-      {/* <Toolbar
-        hasSelected={selectedLists.length}
+      <Toolbar
+        hasSelected={selectedTasks.length}
         onAdd={() => setIsAddModalOpen(true)}
         onEdit={() => setIsEditModalOpen(true)}
         onRemove={setHidden}
-      /> */}
+      />
 
       <Text style={styles.listName}> {listName} </Text>
       <FlatList
-        data={localTasks}
+        data={visibleTasks}
         keyExtractor={(item) => item.id.toString()}
-        renderItem={({ item }) => <TaskCard taskData={item} setLocalTasks={setLocalTasks} />}
+        renderItem={({ item }) => (
+          <TaskCard
+            taskId={item.id}
+            taskData={item}
+            onToggleCheck={onToggleCheck}
+            onLongPress={onLongPressTasks}
+          />
+        )}
       />
     </View>
   );
