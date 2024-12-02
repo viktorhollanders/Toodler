@@ -6,6 +6,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 export default function BoardCard({
   name,
   id,
+  description,
   thumbnailPhoto,
   listData,
   taskData,
@@ -26,6 +27,7 @@ export default function BoardCard({
       <View style={[styles.card, isSelected && styles.selectedCard]}>
         <Image source={{ uri: thumbnailPhoto }} style={styles.image} />
         <Text style={styles.name}>{name}</Text>
+        <Text style={styles.name}>{description}</Text>
       </View>
     </TouchableOpacity>
   );
